@@ -156,7 +156,7 @@ class IsotropicRegion():
         The center of the spherical region.
     """
 
-    def __init__(self, radius, center, volume_fraction):
+    def __init__(self, radius, center, volume_fraction=1.0):
         self.radius = radius
         self.center = center
         self.volume_fraction = volume_fraction
@@ -183,4 +183,17 @@ class IsotropicRegion():
 
         """
         return self.center
+
+
+    def get_volume_fraction(self):
+        """
+        Returns
+        -------
+        volume_fraction : double
+            The water volume fraction radius of the ``IsotropicRegion``.
+
+        """
+        return self.volume_fraction
+
+
 

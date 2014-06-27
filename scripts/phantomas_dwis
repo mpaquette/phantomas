@@ -107,11 +107,14 @@ print "Found %d fibers." % len(fibers)
 regions_dict = geometry.get("isotropic_regions", {})
 region_centers = []
 region_radii = []
+region_volume_fractions = []
 for region_name, region_params in regions_dict.items():
     center = np.asarray(region_params["center"])
     region_centers.append(center)
     radius = region_params["radius"]
     region_radii.append(radius)
+    volume_fraction = region_params.get("volume_fraction", 1.0)
+    region_volume_fractions.append(volume_fraction)
 print "Found %d regions." % len(region_centers)
 
 # Read other phantom parameters
@@ -156,9 +159,10 @@ gm_mask = compute_spherical_region_masks([phantom_center],
 print "\tComputing volume fraction for each tissue type."
 background_vf, gm_vf, wm_vf, csf_vf = \
     compute_volume_fractions(np.asarray([0, 0, 0,]), phantom_radius, gm_mask,
-                             fibers, fiber_masks,
-                             region_centers, region_radii, region_masks,
-                             args.res, phantom_fov)
+        fibers, fiber_masks,
+        region_centers, region_radii, region_masks, region_volume_fractions,
+        args.res, phantom_fov)
+
 
 if args.export_vf:
     print "Exporting volume fraction."
