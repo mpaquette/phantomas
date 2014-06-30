@@ -110,11 +110,11 @@ class ViewIsotropicRegion():
     to a vtk renderer.
     """
     def __init__(self, isotropic_region, ren, **kwargs):
-        self.init_draw(isotropic_region.center, isotropic_region.radius, ren, 
-                       **kwargs)
+        self.init_draw(isotropic_region.center, isotropic_region.radius,
+            isotropic_region.volume_fraction, ren, **kwargs)
 
 
-    def init_draw(self, center, radius, ren, **kwargs):
+    def init_draw(self, center, radius, volume_fraction, ren, **kwargs):
         # Convert color to rgb.
         my_color = kwargs.get('color', 'b')
         label = kwargs.get('label', '')
@@ -133,6 +133,7 @@ class ViewIsotropicRegion():
         sphere_actor.GetProperty().SetColor(rgb_color[0], 
                                             rgb_color[1], 
                                             rgb_color[2])
+        sphere_actor.GetProperty().SetOpacity(volume_fraction)
 
         transform = vtk.vtkTransform()
         transform.Translate(center[0], center[1], center[2])
