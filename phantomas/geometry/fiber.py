@@ -80,6 +80,10 @@ class FiberSource:
             derivatives[1:-1, :] = (control_points[2:] - control_points[1:-1])
         elif tangents == 'symmetric':
             derivatives[1:-1, :] = (control_points[2:] - control_points[:-2])
+        elif tangents == 'sym-cont':
+            derivatives[1:-1, :] = (control_points[2:] - control_points[:-2])
+            derivatives[0, :] = derivatives[1, :]
+            derivatives[-1, :] = derivatives[-2, :]
         else:
             raise Error('tangents should be one of the following: incoming, ' 
                         'outgoing, symmetric')
